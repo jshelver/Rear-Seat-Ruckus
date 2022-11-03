@@ -6,10 +6,19 @@
             "id": "0a01bd2a-72cd-4ffe-98f1-e19516e981e4",
             "actions": [
                 {
-                    "name": "Locomotion",
+                    "name": "Steering",
                     "type": "PassThrough",
                     "id": "4de631ef-4d22-4b12-a939-b5da66e4a65b",
-                    "expectedControlType": "Vector2",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Acceleration",
+                    "type": "PassThrough",
+                    "id": "060a6466-7b07-4303-953c-5089a5eb5525",
+                    "expectedControlType": "Axis",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -17,62 +26,150 @@
             ],
             "bindings": [
                 {
-                    "name": "WASD",
-                    "id": "81bf6d7a-cc5b-4f6a-8852-ab66c8e22413",
-                    "path": "2DVector",
+                    "name": "WS",
+                    "id": "6dc6ba8c-1816-4755-87c8-68930991ab8f",
+                    "path": "1DAxis",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Locomotion",
+                    "action": "Acceleration",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "up",
-                    "id": "cd183bf0-d695-4e15-9d3a-1606b97b3153",
+                    "name": "positive",
+                    "id": "349dc86d-49b4-4276-a1db-c8f8cd85aa8e",
                     "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
-                    "action": "Locomotion",
+                    "groups": "Keyboard",
+                    "action": "Acceleration",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "down",
-                    "id": "42cb623c-f6fa-4ff1-bcc3-6bd784934f9a",
+                    "name": "negative",
+                    "id": "1bcea76d-70b8-4a36-9203-0840856a379c",
                     "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
-                    "action": "Locomotion",
+                    "groups": "Keyboard",
+                    "action": "Acceleration",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "left",
-                    "id": "17529bfb-fb3e-425a-a92f-9cdcf5abbda0",
+                    "name": "Left/Right Trigger",
+                    "id": "e643f436-26a7-4ca9-afaa-72ba8b7f2fd6",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Acceleration",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "2d530e7f-8f94-4c13-923c-12694ea6b419",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Acceleration",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "6f00d35a-73a9-4f4f-9b18-7793d016fb67",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Acceleration",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "AD",
+                    "id": "eb438331-5b49-4ce4-81c7-dbbb2ee5a7ef",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Steering",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "11788505-388e-425e-bb4a-c388c244d2fb",
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
-                    "action": "Locomotion",
+                    "groups": "Keyboard",
+                    "action": "Steering",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "right",
-                    "id": "68630291-92db-4651-abf2-4163ffe37631",
+                    "name": "positive",
+                    "id": "7135858b-1cf1-4ba4-b9f5-4167ea9aa2b5",
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Steering",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Left Stick",
+                    "id": "d0295d35-6a15-44b0-bb89-33fad80d728e",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
                     "groups": "",
-                    "action": "Locomotion",
+                    "action": "Steering",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "6bd92034-7c24-438d-b7ef-3af5d2c54f31",
+                    "path": "<Gamepad>/leftStick/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Steering",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "6295237b-7255-4d56-b974-5b4ccd4c77a6",
+                    "path": "<Gamepad>/leftStick/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Steering",
                     "isComposite": false,
                     "isPartOfComposite": true
                 }
             ]
         }
     ],
-    "controlSchemes": []
+    "controlSchemes": [
+        {
+            "name": "Keyboard",
+            "bindingGroup": "Keyboard",
+            "devices": []
+        },
+        {
+            "name": "Controller",
+            "bindingGroup": "Controller",
+            "devices": []
+        }
+    ]
 }

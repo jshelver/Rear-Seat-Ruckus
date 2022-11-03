@@ -152,9 +152,7 @@ public class Wheel : MonoBehaviour
         if (steeringInput > 0.01f)
         {
             // Add to the target angle (turning to the right)
-            float targetSteeringAngle = currentSteeringAngle + (Time.deltaTime * steeringSensitivity);
-            // Clamp the steering angle
-            targetSteeringAngle = Mathf.Clamp(targetSteeringAngle, -maxSteeringAngle, maxSteeringAngle);
+            float targetSteeringAngle = maxSteeringAngle * steeringInput;
             // Smooth damp for a smooth transition
             currentSteeringAngle = Mathf.SmoothDamp(currentSteeringAngle, targetSteeringAngle, ref rightSteeringVelocity, steeringSmoothTime);
         }
@@ -162,9 +160,8 @@ public class Wheel : MonoBehaviour
         if (steeringInput < -0.01f)
         {
             // Add to the target angle (turning to the left)
-            float targetSteeringAngle = currentSteeringAngle - (Time.deltaTime * steeringSensitivity);
-            // Clamp the steering angle
-            targetSteeringAngle = Mathf.Clamp(targetSteeringAngle, -maxSteeringAngle, maxSteeringAngle);
+            float targetSteeringAngle = maxSteeringAngle * steeringInput;
+            Debug.Log($"TargetSteeringAngle: {targetSteeringAngle}");
             // Smooth damp for a smooth transition
             currentSteeringAngle = Mathf.SmoothDamp(currentSteeringAngle, targetSteeringAngle, ref leftSteeringVelocity, steeringSmoothTime);
         }

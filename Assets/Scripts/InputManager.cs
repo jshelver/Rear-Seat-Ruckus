@@ -18,9 +18,8 @@ public class InputManager : MonoBehaviour
 
     void Update()
     {
-        Vector2 locomotionInput = playerControls.Car.Locomotion.ReadValue<Vector2>();
-        accelerationInput = locomotionInput.y;
-        steeringInput = locomotionInput.x;
+        accelerationInput = playerControls.Car.Acceleration.ReadValue<float>();
+        steeringInput = playerControls.Car.Steering.ReadValue<float>();
     }
 
     void OnEnable()
