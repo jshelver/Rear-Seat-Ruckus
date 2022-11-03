@@ -147,7 +147,8 @@ public class Wheel : MonoBehaviour
         // Y-rotation of wheel in local-space
         float currentSteeringAngle = transform.localEulerAngles.y;
 
-        if (currentSteeringAngle >= 300f) currentSteeringAngle -= 360f;
+        // Some values need to be adjusted by one unit circle in order to be properly clamped (these values will become negative)
+        if (currentSteeringAngle >= 360f - maxSteeringAngle) currentSteeringAngle -= 360f;
 
         // Right
         if (steeringInput > 0.01f)
