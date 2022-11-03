@@ -26,10 +26,24 @@ public class Wheel : MonoBehaviour
     [SerializeField] float carMaxSpeed = 10f;
     [SerializeField] AnimationCurve torqueCurve;
 
+    [Header("Steering Settings")]
+    [SerializeField] bool isFrontWheel;
+    [SerializeField] float steeringSensitivity = 100f;
+    [SerializeField] float maxSteeringAngle = 60f;
+    [SerializeField] float steeringSmoothTime = 0.07f;
+    Quaternion originalWheelRotation;
+    float leftSteeringVelocity, rightSteeringVelocity;
+
     void Start()
     {
+        originalWheelRotation = transform.localRotation;
         minLength = suspensionRestDistance - springTravelDistance;
         maxLength = suspensionRestDistance + springTravelDistance;
+    }
+
+    void Update()
+    {
+        Steering(InputManager.steeringInput, isFrontWheel);
     }
 
     void FixedUpdate()
@@ -124,5 +138,70 @@ public class Wheel : MonoBehaviour
 
             rb.AddForceAtPosition(accelerationDirection * torqueAmount * speedModifier, transform.position);
         }
+    }
+
+    private void Steering(float steeringInput, bool _isFrontWheel)
+    {
+        if (!_isFrontWheel) return;
+
+        // Y-rotation of wheel in local-space
+        float currentSteeringAngle = transform.localEulerAngles.y;
+
+        if (currentSteeringAngle >= 300f) currentSteeringAngle -= 360f;
+
+        // Right
+        if (steeringInput > 0.01f)
+        {
+            // Add to the target angle (turning to the right)
+            float targetSteeringAngle = currentSteeringAngle + (Time.deltaTime * steeringSensitivity);
+            // Clamp the steering angle
+            targetSteeringAngle = Mathf.Clamp(targetSteeringAngle, -maxSteeringAngle, maxSteeringAngle);
+            // Smooth damp for a smooth transition
+            currentSteeringAngle = Mathf.SmoothDamp(currentSteeringAngle, targetSteeringAngle, ref rightSteeringVelocity, steeringSmoothTime);
+        }
+        // Left
+        if (steeringInput < -0.01f)
+        {
+            // Add to the target angle (turning to the left)
+            float targetSteeringAngle = currentSteeringAngle - (Time.deltaTime * steeringSensitivity);
+            // Clamp the steering angle
+            targetSteeringAngle = Mathf.Clamp(targetSteeringAngle, -maxSteeringAngle, maxSteeringAngle);
+            // Smooth damp for a smooth transition
+            currentSteeringAngle = Mathf.SmoothDamp(currentSteeringAngle, targetSteeringAngle, ref leftSteeringVelocity, steeringSmoothTime);
+        }
+
+        // Update local euler angles with new y-value
+        transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, currentSteeringAngle, transform.localEulerAngles.z);
+    }
+    private void OldSteering(float steeringInput, bool _isFrontWheel)
+    {
+        if (!_isFrontWheel) return;
+
+        // Y-rotation of wheel in local-space
+        float currentSteeringAngle = transform.localEulerAngles.y;
+
+        // Right
+        if (steeringInput > 0.01f)
+        {
+            // Add to the target angle (turning to the right)
+            float targetSteeringAngle = currentSteeringAngle + (Time.deltaTime * steeringSensitivity);
+            // Clamp the steering angle
+            targetSteeringAngle = Mathf.Clamp(targetSteeringAngle, -maxSteeringAngle, maxSteeringAngle);
+            // Smooth damp for a smooth transition
+            currentSteeringAngle = Mathf.SmoothDamp(currentSteeringAngle, targetSteeringAngle, ref rightSteeringVelocity, steeringSmoothTime);
+        }
+        // Left
+        if (steeringInput < -0.01f)
+        {
+            // Add to the target angle (turning to the left)
+            float targetSteeringAngle = currentSteeringAngle - (Time.deltaTime * steeringSensitivity);
+            // Clamp the steering angle
+            targetSteeringAngle = Mathf.Clamp(targetSteeringAngle, -maxSteeringAngle, maxSteeringAngle);
+            // Smooth damp for a smooth transition
+            currentSteeringAngle = Mathf.SmoothDamp(currentSteeringAngle, targetSteeringAngle, ref leftSteeringVelocity, steeringSmoothTime);
+        }
+
+        // Update local euler angles with new y-value
+        transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, currentSteeringAngle, transform.localEulerAngles.z);
     }
 }
